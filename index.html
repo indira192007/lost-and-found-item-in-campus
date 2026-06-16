@@ -1,0 +1,100 @@
+<div class="container">
+
+<h1>🎒 Lost & Found Campus Portal</h1>
+
+<div class="stats">
+    <div class="stat-box">
+        <h3>📌 Lost Items</h3>
+        <h2>{{ lost_items|length }}</h2>
+    </div>
+
+    <div class="stat-box">
+        <h3>✅ Found Items</h3>
+        <h2>{{ found_items|length }}</h2>
+    </div>
+</div>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lost & Found Campus Portal</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<h1>🎒 Lost & Found Campus Portal</h1>
+
+<form method="GET">
+    <input type="text" name="search" placeholder="Search Item">
+    <button type="submit">Search</button>
+</form>
+
+<hr>
+
+<h2>Add Lost Item</h2>
+
+<form action="/add_lost" method="POST">
+    <input type="text" name="name" placeholder="Item Name" required><br><br>
+
+    <input type="text" name="description" placeholder="Description" required><br><br>
+
+    <input type="text" name="location" placeholder="Location" required><br><br>
+
+    <input type="date" name="date" required><br><br>
+
+    <button type="submit">Add Lost Item</button>
+</form>
+
+<hr>
+
+<h2>Add Found Item</h2>
+
+<form action="/add_found" method="POST">
+    <input type="text" name="name" placeholder="Item Name" required><br><br>
+
+    <input type="text" name="description" placeholder="Description" required><br><br>
+
+    <input type="text" name="location" placeholder="Location" required><br><br>
+
+    <input type="date" name="date" required><br><br>
+
+    <button type="submit">Add Found Item</button>
+</form>
+
+<hr>
+
+<h2>📌 Lost Items</h2>
+
+<ul>
+{% for item in lost_items %}
+<li>
+    <b>{{ item.name }}</b> -
+    {{ item.description }} -
+    {{ item.location }} -
+    {{ item.date }}
+</li>
+{% endfor %}
+</ul>
+
+<hr>
+
+<h2>✅ Found Items</h2>
+
+<ul>
+{% for item in found_items %}
+<li>
+    <b>{{ item.name }}</b> -
+    {{ item.description }} -
+    {{ item.location }} -
+    {{ item.date }}
+
+    <a href="/claim/{{ loop.index0 }}">
+        <button>Claim</button>
+    </a>
+</li>
+{% endfor %}
+</ul>
+
+</div>
+</body>
+</html>
